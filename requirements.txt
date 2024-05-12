@@ -3,5 +3,5 @@ Flask
 numpy
 Requests
 whois
-keras 
+keras<2.14,>=2.13.1
 tensorflow
