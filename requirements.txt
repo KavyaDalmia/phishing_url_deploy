@@ -3,3 +3,5 @@ Flask==3.0.3
 numpy==1.26.4
 Requests==2.31.0
 whois==1.20240129.2
+keras 
+tensorflow
