@@ -1,6 +1,6 @@
 beautifulsoup4
 Flask
-numpy
+numpy<=1.24.3
 Requests
 whois
 keras<2.14,>=2.13.1
