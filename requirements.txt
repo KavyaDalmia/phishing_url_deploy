@@ -5,3 +5,6 @@ Requests==2.31.0
 whois==1.20240129.2
 keras 
 tensorflow
+re
+urllib
+datetime
