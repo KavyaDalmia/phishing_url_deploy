@@ -1,7 +1,7 @@
-beautifulsoup4==4.12.3
-Flask==3.0.3
-numpy==1.26.4
-Requests==2.31.0
-whois==1.20240129.2
+beautifulsoup4
+Flask
+numpy
+Requests
+whois
 keras 
 tensorflow
