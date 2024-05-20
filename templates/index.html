@@ -7,6 +7,16 @@
 </head>
 <body>
     <h1>Welcome to the Web App!</h1>
+    <form method="post" action="/upload" enctype="multipart/form-data" class="mb-4">
+        <div class="form-group">
+            <label for="file">Upload an Image to Extract Text</label>
+            <input type="file" class="form-control-file" name="file" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Image</button>
+    </form>
+      
+      <hr>
+
     <form action="/predict" method="post">
         <label for="user_input">Enter url:</label><br>
         <input type="text" id="user_input" name="user_input"><br>

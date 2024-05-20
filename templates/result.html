@@ -7,6 +7,17 @@
 </head>
 <body>
     <h1>Result</h1>
-    <p>The prediction is: {{ prediction }}</p>
+    {% if prediction %}
+    <h2>URL Prediction Result</h2>
+    <p>{{ prediction }}</p>
+    {% endif %}
+    
+    {% if extracted_text %}
+    <h2>Extracted Text from Image</h2>
+    <p>{{ extracted_text }}</p>
+    {% endif %}
+
+    <a href="/" class="btn btn-secondary mt-3">Go Back</a>
+    
 </body>
 </html>

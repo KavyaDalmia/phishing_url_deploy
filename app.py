@@ -2,6 +2,15 @@ from flask import Flask, render_template, request
 import pickle
 from features_extraction import *
 import numpy as np
+from flask import Flask, request, redirect, url_for, render_template, flash
+import pytesseract
+from PIL import Image
+import os
+import requests
+import json
+import re
+
+# API endpoint URL
 
 feature_names = ['length', 'check_shortening','check_for_iframe', 'check_for_bar_manipulation','check_for_right_click_disabled', 'web_tracffic']
 def featureExtraction2(url):
@@ -19,6 +28,12 @@ def featureExtraction2(url):
     return features
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['SECRET_KEY'] = 'supersecretkey'
+
+# Ensure the upload folder exists
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 
 # Load your pickle model
 with open('NeuralNetwrok.pickle.dat', 'rb') as f:
@@ -49,7 +64,49 @@ def predict():
         final_prediction = 'PHISHING! DO NOT FALL FOR IT, DONT CLICK ON IT'
     elif rounded_prediction == 0:
         final_prediction = 'Safe url'
-    return render_template('result.html', prediction=final_prediction)
+    return render_template('result.html', extracted_text=None, prediction=final_prediction)
+
+# Define a route to handle image upload form submission
+@app.route('/upload', methods=['POST']) #the /upload willl trigger upload_file func that accepts only POST requests
+def upload_file():
+    if 'file' not in request.files:
+        flash('No file part') #flash meassage for the user
+        return redirect(request.url)
+    
+    file = request.files['file']
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    
+    if file:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        print(filepath)
+        file.save(filepath)
+        text = extract_text_from_image(filepath)
+        return render_template('result.html', extracted_text=text, prediction=None)
+
+def extract_text_from_image(image_path):
+    api_url = 'https://api.api-ninjas.com/v1/imagetotext'
+    headers = {'X-Api-Key': 'SUEE2wTjUj+ZgdKGRaUxtA==6Zzmgaxu3kTsB8Pw'}
+    image_file_descriptor = open(image_path, 'rb')
+    files = {'image': image_file_descriptor}
+    r = requests.post(api_url, files=files, headers=headers)
+    data = (r.json())
+    text_fields = [item["text"] for item in data]
+    url_pattern = r"(?:https?://|www\.)\S+|(?<=\s)[\w-]+\.[\w.-]+"
+    # Search for URLs in the strings list
+    urls_found = [string for string in text_fields if re.search(url_pattern, string)]
+    print(urls_found)
+    extracted_text = urls_found
+    return extracted_text
+
+def look_for_urls(strings_list):
+    # Define a regex pattern for matching URLs
+    url_pattern = r"(?:https?://|www\.)\S+|(?<=\s)[\w-]+\.[\w.-]+"
+    # Search for URLs in the strings list
+    urls_found = [string for string in strings_list if re.search(url_pattern, string)]
+    print(urls_found)
+    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
