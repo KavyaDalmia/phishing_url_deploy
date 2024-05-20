@@ -4,23 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <style>
+        body {
+            background-color: #003366; /* Dark blue background */
+            color: white; /* Text color */
+            font-family: Arial, sans-serif; /* Font family */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #ADD8E6; /* Light blue background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Web App!</h1>
-    <form method="post" action="/upload" enctype="multipart/form-data" class="mb-4">
-        <div class="form-group">
-            <label for="file">Upload an Image to Extract Text</label>
-            <input type="file" class="form-control-file" name="file" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Upload Image</button>
-    </form>
-      
-      <hr>
+    <div class="form-container">
+        <h1>Welcome to the Web App!</h1>
+        <form method="post" action="/upload" enctype="multipart/form-data" class="mb-4">
+            <div class="form-group">
+                <label for="file">Upload an Image to Extract Text</label>
+                <input type="file" class="form-control-file" name="file" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Image</button>
+        </form>
 
-    <form action="/predict" method="post">
-        <label for="user_input">Enter url:</label><br>
-        <input type="text" id="user_input" name="user_input"><br>
-        <input type="submit" value="Submit">
-    </form>
+        <hr>
+
+        <form action="/predict" method="post">
+            <label for="user_input">Enter URL:</label><br>
+            <input type="text" id="user_input" name="user_input"><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 </html>

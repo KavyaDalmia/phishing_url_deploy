@@ -4,20 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result</title>
+    <style>
+        body {
+            background-color: #003366; /* Dark blue background */
+            color: white; /* Text color */
+            font-family: Arial, sans-serif; /* Font family */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #ADD8E6; /* Light blue background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+
 </head>
 <body>
-    <h1>Result</h1>
-    {% if prediction %}
-    <h2>URL Prediction Result</h2>
-    <p>{{ prediction }}</p>
-    {% endif %}
-    
-    {% if extracted_text %}
-    <h2>Extracted Text from Image</h2>
-    <p>{{ extracted_text }}</p>
-    {% endif %}
-
-    <a href="/" class="btn btn-secondary mt-3">Go Back</a>
-    
+    <div class="form-container">
+        <div class="result-box">
+            <h1 class="mb-4">Result</h1>
+            {% if prediction %}
+            <div class="mb-4">
+                <h2>URL Prediction Result</h2>
+                <p>{{ prediction }}</p>
+            </div>
+            {% endif %}
+            
+            {% if extracted_text %}
+            <div class="mb-4">
+                <h2>Extracted Text from Image</h2>
+                <p>{{ extracted_text }}</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="row mt-3 justify-content-center">
+            <div class="col-md-6">
+                <a href="/" class="btn btn-secondary">Go Back</a>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JavaScript CDN (Optional) -->
 </body>
 </html>
