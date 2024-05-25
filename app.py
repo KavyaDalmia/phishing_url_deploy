@@ -64,7 +64,11 @@ def predict():
     # Use your model to generate predictions
     prediction = model.predict(input_data)
     print(features)
-    rounded_prediction = round(prediction[0][0])
+    try:
+        rounded_prediction = round(prediction[0][0])
+    except:
+        rounded_prediction = 1
+        
     print(prediction[0][0])
     print("Rounded Prediction:", rounded_prediction)
     # Render a template with the prediction
