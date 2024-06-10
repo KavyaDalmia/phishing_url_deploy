@@ -19,9 +19,6 @@ load_dotenv()
 # Access the API key
 api_key = os.getenv('API_KEY')
 
-
-
-
 feature_names = ['length', 'check_shortening','check_for_iframe', 'check_for_bar_manipulation','check_for_right_click_disabled', 'web_tracffic']
 def featureExtraction2(url):
     features = []
@@ -46,7 +43,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
 # Load your pickle model
-with open('NeuralNetwrok.pickle.dat', 'rb') as f:
+with open('NeuralNetwork.pickle.dat', 'rb') as f:
     model = pickle.load(f)
 
 # Define a route for the home page
@@ -67,7 +64,12 @@ def predict():
     # Use your model to generate predictions
     prediction = model.predict(input_data)
     print(features)
-    rounded_prediction = round(prediction[0][0])
+    try:
+        rounded_prediction = round(prediction[0][0])
+    except:
+        rounded_prediction = 1
+        
+    print(prediction[0][0])
     print("Rounded Prediction:", rounded_prediction)
     # Render a template with the prediction
     if rounded_prediction == 1:
@@ -124,9 +126,13 @@ def extract_text_from_image(image_path):
     url_pattern = r"(?:https?://|www\.)\S+|(?<=\s)[\w-]+\.[\w.-]+"
     # Search for URLs in the strings list
     urls_found = [string for string in text_fields if re.search(url_pattern, string)]
-    if (urls_found):
+    print(urls_found)
+    if urls_found:
         print('extract func' + urls_found[0])
-    extracted_text = urls_found[0]
+        extracted_text = urls_found[0]
+    else:
+        extracted_text = 'No urls found'
+    
     return extracted_text
 
 # def look_for_urls(strings_list):
