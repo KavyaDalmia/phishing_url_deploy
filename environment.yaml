@@ -1,0 +1,4 @@
+name: phishDetect
+channels:
+  - defaults
+prefix: C:\Users\User\anaconda3\envs\phishDetect
